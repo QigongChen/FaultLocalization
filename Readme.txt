@@ -19,4 +19,21 @@ There are 5 top level directories in this repository
     Contains code for agent that collects flow statistics at end-host
 
 
+Windows / VS Code setup
+-----------------------
+
+The C++ and ns-3 components require a Linux toolchain. On Windows, install
+WSL2 with Ubuntu, then open this folder using "Remote-WSL: Reopen Folder in
+WSL" in VS Code. Run the task "FaultLocalization: setup WSL" once. It installs
+GCC, GDB, sparsehash, Python, and the Python dependencies.
+
+After setup, use these VS Code tasks:
+
+    - FaultLocalization: build C++ localization
+    - FaultLocalization: build ns-3
+
+The C++ debugger configuration is named "C++: reproduce_results". The ns-3
+sample can be started with the task "FaultLocalization: run ns-3 example".
+
+
 

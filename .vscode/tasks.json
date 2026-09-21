@@ -1,0 +1,48 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "FaultLocalization: setup WSL",
+            "type": "shell",
+            "command": "bash",
+            "args": ["${workspaceFolder}/scripts/setup-wsl.sh"],
+            "options": {
+                "shell": {
+                    "executable": "/bin/bash"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "FaultLocalization: build C++ localization",
+            "type": "shell",
+            "command": "make",
+            "options": {
+                "cwd": "${workspaceFolder}/localization/c++"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "FaultLocalization: build ns-3",
+            "type": "shell",
+            "command": "./waf",
+            "args": ["build"],
+            "options": {
+                "cwd": "${workspaceFolder}/ns3"
+            },
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "FaultLocalization: run ns-3 example",
+            "type": "shell",
+            "command": "./waf",
+            "args": ["--run", "scratch-simulator"],
+            "options": {
+                "cwd": "${workspaceFolder}/ns3"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
