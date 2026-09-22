@@ -134,18 +134,18 @@ void Topology::ReadTopologyFromFile(string topology_filename){
     cout<<"num_host_edges: "<<host_edges.size()<<endl;
     network_links.resize(num_tor);
     hosts_in_tor.resize(num_tor);
-    for(int i=0; i<network_edges.size(); i++){
+    for(std::size_t i=0; i<network_edges.size(); i++){
         pair<int, int> link = network_edges[i];
         network_links[link.first].push_back(link.second);
         network_links[link.second].push_back(link.first);
     }
-    for(int i=0; i<host_edges.size(); i++){
+    for(std::size_t i=0; i<host_edges.size(); i++){
         hosts_in_tor[host_edges[i].second].push_back(host_edges[i].first);
     }
     //sanity check
     for(int i=0; i<num_tor; i++){ 
         sort(hosts_in_tor[i].begin(), hosts_in_tor[i].end());
-        for(int t=1; t<hosts_in_tor[i].size(); t++){
+        for(std::size_t t=1; t<hosts_in_tor[i].size(); t++){
             if(hosts_in_tor[i][t] != hosts_in_tor[i][t-1]+1){
                 cout<<"Hosts in Rack "<<i<<" are not contiguous"<<endl;
                 exit(0);
@@ -184,14 +184,14 @@ void Topology::ChooseFailedDevice(int nfails, double frac_links_failed){
 
 void Topology::ChooseFailedLinks(int nfails, bool network_links_only){
     vector<pair<int, int> > edges_list;
-    for(int s=0; s<network_links.size(); s++){
-        for(int ind=0; ind<network_links[s].size(); ind++){
+    for(std::size_t s=0; s<network_links.size(); s++){
+        for(std::size_t ind=0; ind<network_links[s].size(); ind++){
             edges_list.push_back(pair<int, int>(s, network_links[s][ind]));
         }
     }
     if (!network_links_only){
         for(int t=0; t<num_tor; t++){ 
-            for(int h=0; h<hosts_in_tor[t].size(); h++){
+            for(std::size_t h=0; h<hosts_in_tor[t].size(); h++){
                 int host = hosts_in_tor[t][h];
                 edges_list.push_back(pair<int, int>(t, host));
                 edges_list.push_back(pair<int, int>(host, t));
@@ -305,7 +305,7 @@ char* Topology::GetFlowSrcIpAddress(Flow &flow){
 
     // Case2: next hop on the path is another switch
     if (flow.src_node < flow.second_hop){
-        for (int h=0;h<network_links[flow.src_node].size();h++){
+        for (std::size_t h=0;h<network_links[flow.src_node].size();h++){
             if (network_links[flow.src_node][h] == flow.second_hop){
                 return GetLinkIpAddressFirst(flow.src_node, h);
             }
@@ -313,7 +313,7 @@ char* Topology::GetFlowSrcIpAddress(Flow &flow){
         assert(false);
     }
     else{
-        for (int h=0;h<network_links[flow.second_hop].size();h++){
+        for (std::size_t h=0;h<network_links[flow.second_hop].size();h++){
             if (network_links[flow.second_hop][h] == flow.src_node){
                 return GetLinkIpAddressSecond(flow.second_hop, h);
             }
@@ -331,7 +331,7 @@ char* Topology::GetFlowDestIpAddress(Flow &flow){
 
     // Case2: previous hop on the path is another switch
     if (flow.dest_node < flow.second_last_hop){
-        for (int h=0;h<network_links[flow.dest_node].size();h++){
+        for (std::size_t h=0;h<network_links[flow.dest_node].size();h++){
             if (network_links[flow.dest_node][h] == flow.second_last_hop){
                 return GetLinkIpAddressFirst(flow.dest_node, h);
             }
@@ -339,7 +339,7 @@ char* Topology::GetFlowDestIpAddress(Flow &flow){
         assert(false);
     }
     else{
-        for (int h=0;h<network_links[flow.second_last_hop].size();h++){
+        for (std::size_t h=0;h<network_links[flow.second_last_hop].size();h++){
             if (network_links[flow.second_last_hop][h] == flow.dest_node){
                 return GetLinkIpAddressSecond(flow.second_last_hop, h);
             }
@@ -358,7 +358,7 @@ char* Topology::GetSwitchIpAddress(int sw){
     }
     else{
         // link ip determined by nbr
-        for (int ind=0; ind<network_links[nbr].size(); ind++){
+        for (std::size_t ind=0; ind<network_links[nbr].size(); ind++){
             if (network_links[nbr][ind] == sw){
                 return GetLinkIpAddressSecond(nbr, ind);
             }
@@ -372,7 +372,7 @@ bool Topology::IsNodeHost(int node){
 }
 
 bool Topology::IsNodeRack(int node){
-    return (node < HOST_OFFSET) and (hosts_in_tor.size()<node and hosts_in_tor[node].size()>0);
+    return (node < HOST_OFFSET) and (node >= 0) and (static_cast<std::size_t>(node) < hosts_in_tor.size()) and hosts_in_tor[node].size()>0;
 }
 
 int Topology::GetHostRack(int host){
@@ -444,7 +444,7 @@ void Topology::ConnectSwitchesAndSwitches(PointToPointHelper &p2p, NodeContainer
         ip_container_ss[i].resize(network_links[i].size());
     }
     for (int i=0;i<num_tor;i++){
-        for (int h=0;h<network_links[i].size();h++){
+        for (std::size_t h=0;h<network_links[i].size();h++){
             int nbr = network_links[i][h];
             if (nbr < i) continue;
             double silent_drop_rate1 = GetFailParam(pair<int, int>(i, nbr), fail_param);
@@ -491,9 +491,9 @@ void Topology::ConnectSwitchesAndHosts(PointToPointHelper &p2p, NodeContainer &t
         ip_container_sh[i].resize(GetNumHostsInRack(i));
     }
     for (int i=0;i<num_tor;i++){
-        for (int h=0; h<hosts_in_tor[i].size(); h++){
+        for (std::size_t h=0; h<hosts_in_tor[i].size(); h++){
             int host = hosts_in_tor[i][h];
-            assert (GetHostIndexInRack(host) == h);
+            assert (GetHostIndexInRack(host) == static_cast<int>(h));
             double silent_drop_rate1 = GetFailParam(pair<int, int>(i, host), fail_param);
             double silent_drop_rate2 = GetFailParam(pair<int, int>(host, i), fail_param);
 
@@ -588,7 +588,7 @@ void Topology::SnapshotFlow(Flow flow, ApplicationContainer& flow_app, Time star
 
 void Topology::PrintIpAddresses(){
     for (int i=0;i<num_tor;i++){
-        for (int h=0;h<network_links[i].size();h++){
+        for (std::size_t h=0;h<network_links[i].size();h++){
             int nbr = network_links[i][h];
             if (nbr < i) continue;
             pair<char* , char*> subnet_base = GetLinkBaseIpAddress(i, h);

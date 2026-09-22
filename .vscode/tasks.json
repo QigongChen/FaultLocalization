@@ -26,8 +26,8 @@
         {
             "label": "FaultLocalization: build ns-3",
             "type": "shell",
-            "command": "./waf",
-            "args": ["build"],
+            "command": "python3",
+            "args": ["./waf", "build"],
             "options": {
                 "cwd": "${workspaceFolder}/ns3"
             },
@@ -37,8 +37,8 @@
         {
             "label": "FaultLocalization: run ns-3 example",
             "type": "shell",
-            "command": "./waf",
-            "args": ["--run", "scratch-simulator"],
+            "command": "python3",
+            "args": ["./waf", "--run", "scratch-simulator"],
             "options": {
                 "cwd": "${workspaceFolder}/ns3"
             },

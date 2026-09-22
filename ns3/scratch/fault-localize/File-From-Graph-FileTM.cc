@@ -87,7 +87,7 @@ void SnapshotFlows(Topology* topology, ApplicationContainer* flow_app, double sn
     Simulator::Schedule (Seconds(snapshot_period_seconds), &SnapshotFlows, topology,
                          flow_app, snapshot_period_seconds);
     double curr_time_seconds = Simulator::Now().GetSeconds();
-    for (int ff = 0; ff<topology->flows.size(); ff++){
+    for (std::size_t ff = 0; ff<topology->flows.size(); ff++){
         if(flow_app[ff].GetStartTime().GetSeconds() < curr_time_seconds){
             cout<<"Recording snapshot "<<" "<<flow_app[ff].GetStartTime().GetSeconds()
                   <<" "<<curr_time_seconds<<" "<<snapshot_period_seconds<<endl;
