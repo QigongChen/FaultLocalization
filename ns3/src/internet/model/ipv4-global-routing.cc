@@ -193,13 +193,13 @@ Ipv4GlobalRouting::LogFlowRule (const Ipv4Header &header, Ptr<const Packet> ipPa
     //assert(*it == rule);
     return;
   }
-  for (int ind = 0; ind<allRoutes.size(); ind++){
+  for (std::size_t ind = 0; ind<allRoutes.size(); ind++){
       uint32_t interface = (allRoutes.at(ind))->GetInterface ();
       uint32_t  nAddresses = m_ipv4->GetNAddresses(interface);
       assert(nAddresses == 1);
       Ipv4InterfaceAddress address = m_ipv4->GetAddress(interface, 0);
       //Ptr<Node> node = m_ipv4->GetNetDevice ((allRoutes.at(selectIndex))->GetInterface ())->GetNode();
-      if (ind == selectIndex){
+      if (ind == static_cast<std::size_t> (selectIndex)){
         std::cout<<"hop_taken "<<header.GetSource()<<" "<<header.GetDestination()<<" "<<sourcePort<<" "<<destinationPort<<" "<<ind<<" "<<address.GetLocal()<<std::endl;
       }
   }
