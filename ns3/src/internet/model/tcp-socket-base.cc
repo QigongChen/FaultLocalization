@@ -166,6 +166,11 @@ TcpSocketBase::GetTypeId (void)
 TcpSocketBase::TcpSocketBase (void)
   : m_dupAckCount (0),
     m_delAckCount (0),
+    m_sentPackets (0),
+    m_ackedPackets (0),
+    m_lostPackets (0),
+    m_randomlyLostPackets (0),
+    m_finishTime (0),
     m_endPoint (0),
     m_endPoint6 (0),
     m_node (0),
@@ -191,12 +196,7 @@ TcpSocketBase::TcpSocketBase (void)
     m_sndScaleFactor (0),
     m_rcvScaleFactor (0),
     m_timestampEnabled (false),
-    m_timestampToEcho (0),
-    m_sentPackets(0),
-    m_lostPackets(0),
-    m_randomlyLostPackets(0),
-    m_ackedPackets(0),
-    m_finishTime(0)
+    m_timestampToEcho (0)
 
 {
   NS_LOG_FUNCTION (this);
@@ -216,6 +216,11 @@ TcpSocketBase::TcpSocketBase (const TcpSocketBase& sock)
     m_delAckTimeout (sock.m_delAckTimeout),
     m_persistTimeout (sock.m_persistTimeout),
     m_cnTimeout (sock.m_cnTimeout),
+    m_sentPackets (sock.m_sentPackets),
+    m_ackedPackets (sock.m_ackedPackets),
+    m_lostPackets (sock.m_lostPackets),
+    m_randomlyLostPackets (sock.m_randomlyLostPackets),
+    m_finishTime (sock.m_finishTime),
     m_endPoint (0),
     m_endPoint6 (0),
     m_node (sock.m_node),
@@ -244,12 +249,7 @@ TcpSocketBase::TcpSocketBase (const TcpSocketBase& sock)
     m_sndScaleFactor (sock.m_sndScaleFactor),
     m_rcvScaleFactor (sock.m_rcvScaleFactor),
     m_timestampEnabled (sock.m_timestampEnabled),
-    m_timestampToEcho (sock.m_timestampToEcho),
-    m_sentPackets (sock.m_sentPackets),
-    m_lostPackets (sock.m_lostPackets),
-    m_randomlyLostPackets(sock.m_randomlyLostPackets),
-    m_ackedPackets(sock.m_ackedPackets),
-    m_finishTime (sock.m_finishTime)
+    m_timestampToEcho (sock.m_timestampToEcho)
 
 {
   NS_LOG_FUNCTION (this);
