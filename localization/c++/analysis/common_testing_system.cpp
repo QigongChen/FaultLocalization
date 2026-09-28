@@ -120,7 +120,7 @@ void GetPrecisionRecallParamsFile(string topology_file, string trace_file,
     if constexpr (REDUCED_ANALYSIS) {
         BayesianNet *b_estimator = static_cast<BayesianNet *>(estimator);
         string reduced_map_file =
-            "/home/vharsh2/ns-allinone-3.24.1/ns-3.24.1/ns3/topology/"
+            "../../../ns3/topology/"
             "ft_k10_os3/ns3ft_deg10_sw125_svr250_os3_i1.reduced";
         LogData *reduced_data = new LogData();
         SetInputForReduced(*b_estimator, data, reduced_data, reduced_map_file,

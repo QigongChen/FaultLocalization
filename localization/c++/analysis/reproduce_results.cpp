@@ -55,8 +55,8 @@ vector<string> GetFilesLinkFlap() {
 }
 
 vector<string> GetFilesPacketCorruption() {
-    string base_dir = "/home/vharsh2//Flock/hw_traces/emulated";
-    string file_prefix = base_dir + "/drop_prob_0.5/tor_uplink/test_random";
+    string base_dir = hw_traces_dir + "/packet_corruption_traces";
+    string file_prefix = base_dir + "/plog_random";
     vector<PII> ignore_files = {};
     vector<string> files;
     for (int f = 1; f <= 1; f++) {
@@ -74,7 +74,7 @@ vector<string> GetFilesPacketCorruption() {
         }
     }
     ignore_files = {};
-    file_prefix = base_dir + "/drop_prob_0.5/tor_uplink/test_skewed";
+    file_prefix = base_dir + "/plog_skewed";
     for (int f = 1; f <= 1; f++) {
         for (int s = 0; s < 30; s++) {
             if (CROSS_VALIDATION and (s + (int)TRAINING_SET) % 2 == 0)
@@ -88,7 +88,7 @@ vector<string> GetFilesPacketCorruption() {
         }
     }
     ignore_files = {};
-    file_prefix = base_dir + "/drop_prob_0.5/host_uplink/test_random";
+    file_prefix = base_dir + "/plog_random";
     for (int f = 1; f <= 1; f++) {
         for (int s = 0; s < 30; s++) {
             if (CROSS_VALIDATION and (s + (int)TRAINING_SET) % 2 == 0)
@@ -102,7 +102,7 @@ vector<string> GetFilesPacketCorruption() {
         }
     }
     ignore_files = {};
-    file_prefix = base_dir + "/drop_prob_0.5/host_uplink/test_skewed";
+    file_prefix = base_dir + "/plog_skewed";
     for (int f = 1; f <= 1; f++) {
         for (int s = 0; s < 30; s++) {
             if (CROSS_VALIDATION and (s + (int)TRAINING_SET) % 2 == 0)
@@ -116,7 +116,7 @@ vector<string> GetFilesPacketCorruption() {
         }
     }
     ignore_files = {};
-    file_prefix = base_dir + "/no_failure/test_random";
+    file_prefix = base_dir + "/plog_random";
     for (int f = 0; f <= 0; f++) {
         int smin =
             (CROSS_VALIDATION
@@ -134,7 +134,7 @@ vector<string> GetFilesPacketCorruption() {
         }
     }
     ignore_files = {};
-    file_prefix = base_dir + "/no_failure/test_skewed";
+    file_prefix = base_dir + "/plog_skewed";
     for (int f = 0; f <= 0; f++) {
         int smin =
             (CROSS_VALIDATION
@@ -266,9 +266,9 @@ pair<vector<string>, vector<string>> GetFilesHwCalibrationPacor() {
         }
     }
     ignore_files = {};
-    string base_dir = "/home/vharsh2//Flock/hw_traces/emulated";
+    string base_dir = hw_traces_dir + "/packet_corruption_traces";
     topology = base_dir + "/ls_6_2.edgelist";
-    file_prefix = base_dir + "/no_failure/test_random";
+    file_prefix = base_dir + "/plog_random";
     for (int f = 0; f <= 0; f++) {
         for (int s = 0; s < 15; s++) {
             if (find(ignore_files.begin(), ignore_files.end(), PII(f, s)) ==
@@ -281,7 +281,7 @@ pair<vector<string>, vector<string>> GetFilesHwCalibrationPacor() {
         }
     }
     ignore_files = {};
-    file_prefix = base_dir + "/no_failure/test_skewed";
+    file_prefix = base_dir + "/plog_skewed";
     for (int f = 0; f <= 0; f++) {
         for (int s = 0; s < 15; s++) {
             if (find(ignore_files.begin(), ignore_files.end(), PII(f, s)) ==
@@ -298,7 +298,7 @@ pair<vector<string>, vector<string>> GetFilesHwCalibrationPacor() {
 
 vector<string> GetFilesHwCalibration() {
     // string file_prefix =
-    // "/home/vharsh2/flock/ns3/topology/hw_ls_6_2/optical_fault/plog_testbed";
+    // "../../../ns3/topology/hw_ls_6_2/optical_fault/plog_testbed";
     // string file_prefix =
     // "../../ns3/topology/hw_ls_6_2/calibration/wred_logs/plog_nb";
     string file_prefix = "../../ns3/topology/hw_ls_6_2/"
@@ -323,7 +323,7 @@ vector<string> GetFilesHwCalibration() {
 
 vector<string> GetFilesHw() {
     // string file_prefix =
-    // "/home/vharsh2/flock/ns3/topology/hw_ls_6_2/optical_fault/plog_testbed";
+    // "../../../ns3/topology/hw_ls_6_2/optical_fault/plog_testbed";
     string file_prefix = hw_traces_dir + "/wred/plog";
     vector<PII> ignore_files = {};
     vector<string> files;
@@ -440,10 +440,10 @@ vector<string> GetFilesMixed40G() {
 vector<string> GetFilesMixed() {
     // string file_prefix =
     // "../../ns3/topology/hw_ls_6_2/traffic_files/plog";
-    string file_prefix = "/home/vharsh2/ns-allinone-3.24.1/ns-3.24.1/ns3/"
+    string file_prefix = "../../../ns3/"
                          "topology/ft_k10_os3/traffic_files_nb/plog_nb";
     // string file_prefix =
-    // "/home/vharsh2/ns-allinone-3.24.1/ns-3.24.1/ns3/topology/rrg_sw125_svr250_os3/logs/plog";
+    // "../../../ns3/topology/rrg_sw125_svr250_os3/logs/plog";
     vector<PII> ignore_files = {};
     vector<string> files;
     for (int f = 1; f <= 8; f++) {
@@ -465,11 +465,11 @@ vector<string> GetFilesMixed() {
 int NLINKS_OMMITTED_IRREGULAR = 100;
 pair<vector<string>, vector<string>> GetFilesRRG() {
     // string file_prefix =
-    // "/home/vharsh2/ns-allinone-3.24.1/ns-3.24.1/flow_simulator/logs/irregular_topology/plog";
+    // "../../../flow_simulator/logs/irregular_topology/plog";
     string file_prefix =
-        "/home/vharsh2/ns-allinone-3.24.1/ns-3.24.1/ns3/topology/ft_k10_os3/"
+        "../../../ns3/topology/ft_k10_os3/"
         "ommitted/logs/new/network_links_only/plog";
-    string topo_prefix = "/home/vharsh2/ns-allinone-3.24.1/ns-3.24.1/ns3/"
+    string topo_prefix = "../../../ns3/"
                          "topology/ft_k10_os3/ommitted/topologies/ns3ft_o" +
                          to_string(NLINKS_OMMITTED_IRREGULAR) +
                          "_deg10_sw125_svr250_os3";
@@ -507,7 +507,7 @@ pair<vector<string>, vector<string>> GetFilesRRG() {
 }
 
 vector<string> GetFilesFlowSimulator() {
-    string file_prefix = "/home/vharsh2/ns-allinone-3.24.1/ns-3.24.1/"
+    string file_prefix = "../../../"
                          "localization/flow_simulator/ft_logs/plog";
     vector<pair<string, int>> ignore_files = {};
     vector<string> files;
@@ -574,7 +574,7 @@ vector<string> GetFilesSoftness() {
 
 vector<string> GetFilesSoftnessAll() {
     // string file_prefix =
-    // "/home/vharsh2/ns-allinone-3.24.1/ns-3.24.1/topology/ft_k10_os3/softness_logs/random_traffic_logs/plog";
+    // "../../../ns3/topology/ft_k10_os3/softness_logs/random_traffic_logs/plog";
     vector<string> loss_rate_strings;
     string file_prefix;
     vector<pair<string, int>> ignore_files;
@@ -618,7 +618,7 @@ vector<string> GetFilesSoftnessAll() {
 
 vector<string> GetFiles007Verification() {
     string file_prefix =
-        "/home/vharsh2/ns-allinone-3.24.1/ns-3.24.1/topology/"
+        "../../../ns3/topology/"
         "ft_core10_pods2_agg8_tor20_hosts40/fail_network_links/plog";
     vector<pair<string, int>> ignore_files = {};
     vector<string> files;
